@@ -10,4 +10,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: ls
-    - run: azcopy copy .\* '${{secrets.STORAGE_ACCOUNT_SAS_TOKEN}}'
+    - run: azcopy copy .\* '${{secrets.ACCOUNT_SECRET_WEBSITE_TOKEN}}'
