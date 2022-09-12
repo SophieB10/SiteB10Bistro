@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main  
+jobs:
+  soSomething:
+    runs-on: windows-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - run: ls
+    - run: azcopy copy .\* '${{secrets.STORAGE_ACCOUNT_SAS_TOKEN}}'
