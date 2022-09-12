@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blue10 Bistro</title>
+</head>
+<body>
+<img src="blue10logo.png" class="img"/>
+
+    
+<h1>Welkom bij Blue10 Bistro</h1>
+<h3>Bestel hier</h3>
+<h4>Hoofdgerechten</h4>
+<input type="radio" id="Smoked Salmon" name="order_item" value="Smoked Salmon: 6.25">
+    <label for="Smoked Salmon">Smoked Salmon: 6.25</label><br>
+<input type="radio" id="Carrot Soup" name="order_item" value="Carrot Soup: 3.55">
+    <label for="Carrot Soup">Carrot Soup: 3.55</label><br>
+<input type="radio" id="Chicken Balerno" name="order_item" value="Chicken Balerno: 9.35">
+    <label for="Chicken Balerno">Chicken Balerno: 9.35</label><br>
+<input type="radio" id="Roast Beef" name="order_item" value="Roast Beef: 10.00">
+    <label for="Roast Beef">Roast Beef: 10.00</label><br>
+<input type="radio" id="Pizza Americana" name="order_item" value="Pizza Americana: 10.20">
+    <label for="Pizza Americana">Pizza Americana: 10.20</label><br>
+<input type="radio" id="Chocolate Gateau" name="order_item" value="Chocolate Gateau: 4.00">
+    <label for="Chocolate Gateau">Chocolate Gateau: 4.00</label><br>
+<input type="radio" id="Chocolate Cake" name="order_item" value="Chocolate Cake: 4.50">
+    <label for="Chocolate Cake">Chocolate Cake: 4.50</label><br>
+<input type="radio" id="Coffee and Mints" name="order_item" value="Coffee and Mints: 2.50">
+    <label for="Coffee and Mints">Coffee and Mints: 2.50</label><br>
+<input type="radio" id="Margarita Lemon" name="order_item" value="Margarita Lemon: 7.00">
+    <label for="Margarita Lemon">Margarita Lemon: 7.00</label><br>
+<input type="radio" id="Cosmopolitan" name="order_item" value="Cosmopolitan: 7.99">
+    <label for="Cosmopolitan">Cosmopolitan: 7.99</label><br>
+<input type="radio" id="Moscow Mule" name="order_item" value="Moscow Mule: 3.99">
+    <label for="Moscow Mule">Moscow Mule: 3.99</label><br>
+<br>
+
+<button type="button" id= "btn1" onclick="ListOrder()">Bestel</button>
+<hr>
+
+<h3>Bestelling</h3>
+<ul>
+
+    <div>
+
+        <div id="bonnetje"></div>
+
+    </div>
+
+</ul>
+<br>
+<button type="button" id="btn2" onclick="totalAmount()">Afrekenen</button>
+<hr>
+
+<h2 id = "price"></h2> 
+<hr>
+<nav><a href="https://www.blue10.com/">Visit our website Blue10</a></nav>
+
+
+</body>
+
+<script src="functionsmenu.js"></script>
+</html>
