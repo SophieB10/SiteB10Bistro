@@ -1,0 +1,7 @@
+body{
+    background-color: chartreuse;
+}
+
+.radio-toolbar label{
+    display: inline-block;
+}
