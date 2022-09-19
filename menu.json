@@ -2,17 +2,17 @@
     {
         "id": 0,
         "Dish": "Smoked Salmon",
-        "Price": 60.25
+        "Price": 6.25
     },
     {
         "id": 1,
         "Dish": "Carrot Soup",
-        "Price": 30.55
+        "Price": 3.55
     },
     {
         "id": 2,
         "Dish": "Chicken Balerno",
-        "Price": 90.35
+        "Price": 9.35
     },
     {
         "id": 3,
