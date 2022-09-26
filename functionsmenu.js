@@ -26,7 +26,6 @@ function ListOrder() {
 function totalAmount(){
     document.getElementById("price").innerHTML = "Totaal Bedrag: " + totalPrice.toFixed(2);
 
-
     const options = {
         method: 'POST',
         headers: {   
@@ -40,10 +39,8 @@ function totalAmount(){
     };
 
    fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput?', options );
-    
     var btn1 = document.getElementById("btn1");
     btn1.style.display = 'none';
     var btn2 = document.getElementById("btn2");
     btn2.style.display = 'none';
-    
 }
