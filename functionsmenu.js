@@ -2,10 +2,13 @@
 let totalPrice = parseFloat(0);
 
 function ListOrder() {
+    let dishlist = [];
 
     var paragraph = document.createElement("li");
 
     var selecteddish = document.querySelector('input[name="order_item"]:checked').value;
+
+    dishlist.push(selecteddish.substring(0, selecteddish.indexOf(':')));
 
     const price = String(selecteddish).split(" ").pop();
 
@@ -22,8 +25,8 @@ function ListOrder() {
 
 function totalAmount(){
     document.getElementById("price").innerHTML = "Totaal Bedrag: " + totalPrice.toFixed(2);
-    
-   
+
+
     const options = {
         method: 'POST',
         headers: {   
@@ -31,7 +34,8 @@ function totalAmount(){
             'Content-Type': 'application/json'  
           },  
          body: `{
-            "priceCalculated": ${totalPrice.toFixed(2)}
+            "priceCalculated": ${totalPrice.toFixed(2)},
+            "Order": ${dishlist}
            }`,  
     };
 
@@ -41,6 +45,5 @@ function totalAmount(){
     btn1.style.display = 'none';
     var btn2 = document.getElementById("btn2");
     btn2.style.display = 'none';
-
     
 }
