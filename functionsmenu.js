@@ -34,11 +34,11 @@ function totalAmount(){
           },  
          body: `{
             "priceCalculated": ${totalPrice.toFixed(2)},
-            "Order": ${dishlist}
+            "Order": [${dishlist}]
            }`,  
     };
 
-   fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput', options );
+   fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput?', options );
     var btn1 = document.getElementById("btn1");
     btn1.style.display = 'none';
     var btn2 = document.getElementById("btn2");
