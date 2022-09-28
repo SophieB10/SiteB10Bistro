@@ -15,6 +15,7 @@ using Azure.Storage.Blobs;
 using System.Text;
 
 
+
 namespace MenuFunctionOutput
 {
    public class TableOutput
@@ -41,9 +42,9 @@ namespace MenuFunctionOutput
             var CONNECTION_STRING = Environment.GetEnvironmentVariable("ConnectionString");
             string GUID = Guid.NewGuid().ToString();
 
-            string BLOB_CONTAINER = "order_blobs";
-            BlobContainerClient container = await blobServiceClient.CreateBlobContainerAsync(BLOB_CONTAINER);
-            container.CreateIfNotExistsAsync();
+            string BLOB_CONTAINER = "orderblobs";
+            BlobContainerClient container = new BlobContainerClient(CONNECTION_STRING, BLOB_CONTAINER);
+            await container.CreateIfNotExistsAsync();
             byte[] byteArray = Encoding.ASCII.GetBytes(requestBody);
             MemoryStream blob = new MemoryStream(byteArray);
             BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{GUID}.json");
