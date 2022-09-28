@@ -57,7 +57,7 @@ namespace MenuFunctionOutput
             ILogger log)
         {         
 
-            string reqBody = await req.ReadAsStringAsync();      
+            string reqBody = await new StreamReader(req.Body).ReadToEndAsync();   
 
             IncomingOrderMessage data;
 
