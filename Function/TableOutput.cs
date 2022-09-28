@@ -68,7 +68,7 @@ namespace MenuFunctionOutput
                 if(!valid) return new BadRequestObjectResult("Order is null 😢");
             }
             catch(Exception e){
-                var msg = $"Hepl! Could not deserialize msg: {reqBody}";
+                var msg = $"Hepl! Could not deserialize msg: {req}";
                 log.LogError(e,msg);
                 return new BadRequestObjectResult(msg);
             }             
@@ -103,7 +103,6 @@ namespace MenuFunctionOutput
             if(data.Length == 0) throw new Exception("HEPL could not read bytes off of request stream 😢");
             
             //HIER WETEN WE ZEKER DAT WE BYTES HEBBEN!
-
             await container.CreateIfNotExistsAsync();
             BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{guid}.json");
             
