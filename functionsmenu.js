@@ -36,10 +36,10 @@ function totalAmount(){
             'Accept': 'application/json',   
             'Content-Type': 'application/json'  
           },  
-         body: `{
+        body: `{
             "priceCalculated": ${totalPrice.toFixed(2)},
             "Order": "${orderlist}"]
-           }`,  
+           }`  
     };
 
    fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput?', options );
