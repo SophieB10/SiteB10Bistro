@@ -34,7 +34,7 @@ function totalAmount(){
           },  
          body: `{
             "priceCalculated": ${totalPrice.toFixed(2)},
-            "Order": [${dishlist}]
+            "Order": '${dishlist}']
            }`,  
     };
 

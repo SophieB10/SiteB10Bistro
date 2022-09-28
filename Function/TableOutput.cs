@@ -41,9 +41,11 @@ namespace MenuFunctionOutput
             var CONNECTION_STRING = Environment.GetEnvironmentVariable("ConnectionString");
             string GUID = Guid.NewGuid().ToString();
 
-            string BLOB_CONTAINER = "order-blobs";
+            string BLOB_CONTAINER = "order_blobs";
+            BlobContainerClient container = await blobServiceClient.CreateBlobContainerAsync(BLOB_CONTAINER);
+            container.CreateIfNotExistsAsync();
             byte[] byteArray = Encoding.ASCII.GetBytes(requestBody);
-            Stream blob = new MemoryStream(byteArray);
+            MemoryStream blob = new MemoryStream(byteArray);
             BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{GUID}.json");
             blobClient.Upload(blob);
 
