@@ -34,16 +34,14 @@ function totalAmount(){
         "priceCalculated": totalPrice.toFixed(2),
         "order": orderstring
        };
-    let requestBody = JSON.stringify(BODY);
 
-    
 
    fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput', {
     method: 'POST',
     headers: {  
         'Content-Type': 'application/json'  
       },  
-    Body: requestBody
+    Body: JSON.stringify(BODY)
     })
     .catch((error) => {
         console.log(error);
