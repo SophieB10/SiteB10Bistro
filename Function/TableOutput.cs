@@ -68,7 +68,7 @@ namespace MenuFunctionOutput
                 if(!valid) return new BadRequestObjectResult("Order is null 😢");
             }
             catch(Exception e){
-                var msg = $"Hepl! Could not deserialize msg: {req}";
+                var msg = $"Hepl! Could not deserialize msg: {req.Body}";
                 log.LogError(e,msg);
                 return new BadRequestObjectResult(msg);
             }             
