@@ -45,7 +45,7 @@ namespace MenuFunctionOutput
             string BLOB_CONTAINER = "orderblobs";
             BlobContainerClient container = new BlobContainerClient(CONNECTION_STRING, BLOB_CONTAINER);
             await container.CreateIfNotExistsAsync();
-            byte[] byteArray = Encoding.ASCII.GetBytes(data);
+            byte[] byteArray = Encoding.ASCII.GetBytes(requestBody);
             MemoryStream blob = new MemoryStream(byteArray);
             BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{GUID}.json");
             blobClient.Upload(blob);
@@ -55,7 +55,7 @@ namespace MenuFunctionOutput
 
             var Orderitem = new Order()
             {
-                Amount = data?.priceCalculated,
+                Amount = data.priceCalculated,
                 RowKey = GUID
             };
 

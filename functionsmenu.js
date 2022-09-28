@@ -27,22 +27,25 @@ function ListOrder() {
 
 function totalAmount(){
     document.getElementById("price").innerHTML = "Totaal Bedrag: " + totalPrice.toFixed(2);
-    var orderlist = dishlist.toString();
-    console.log(orderlist);
+    var orderstring = dishlist.toString();
+    console.log(orderstring);
 
-    const options = {
-        method: 'POST',
-        headers: {   
-            'Accept': 'application/json',   
-            'Content-Type': 'application/json'  
-          },  
-        body: `{
-            "priceCalculated": ${totalPrice.toFixed(2)},
-            "Order": "${orderlist}"]
-           }`  
-    };
+    let BODY = {
+        "priceCalculated": totalPrice.toFixed(2),
+        "order": orderstring
+       };
+    let requestBody = JSON.stringify(BODY);
 
-   fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput?', options );
+    
+
+   fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput', {
+    method: 'POST',
+    headers: {  
+        'Content-Type': 'application/json'  
+      },  
+    Body: requestBody
+    });
+
     var btn1 = document.getElementById("btn1");
     btn1.style.display = 'none';
     var btn2 = document.getElementById("btn2");
