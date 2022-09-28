@@ -64,6 +64,8 @@ namespace MenuFunctionOutput
             // Input guard
             try{
                 data = JsonConvert.DeserializeObject<IncomingOrderMessage>(reqBody);
+                var valid = string.IsNullOrWhiteSpace(data.order);
+                if(!valid) return new BadRequestObjectResult("Order is null 😢");
             }
             catch(Exception e){
                 var msg = $"Hepl! Could not deserialize msg: {reqBody}";
