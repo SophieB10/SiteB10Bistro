@@ -1,14 +1,14 @@
 
 let totalPrice = parseFloat(0);
+var dishlist = new Array();
 
 function ListOrder() {
-    let dishlist = [];
 
     var paragraph = document.createElement("li");
 
     var selecteddish = document.querySelector('input[name="order_item"]:checked').value;
 
-    dishlist.push(selecteddish);
+    dishlist.push(selecteddish.substring(0, selecteddish.indexOf(":")));
 
     const price = String(selecteddish).split(" ").pop();
 
@@ -21,11 +21,14 @@ function ListOrder() {
     var element = document.getElementById("bonnetje");//Pak de target div
 
     element.appendChild(paragraph); // Voeg nieuwe paragraaf aan target div
+
+    console.log(dishlist);
 }
 
 function totalAmount(){
     document.getElementById("price").innerHTML = "Totaal Bedrag: " + totalPrice.toFixed(2);
     var orderlist = dishlist.toString();
+    console.log(orderlist);
 
     const options = {
         method: 'POST',
@@ -35,7 +38,7 @@ function totalAmount(){
           },  
          body: `{
             "priceCalculated": ${totalPrice.toFixed(2)},
-            "Order": ${dishlist}]
+            "Order": ${orderlist}]
            }`,  
     };
 
