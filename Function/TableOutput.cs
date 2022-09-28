@@ -96,9 +96,17 @@ namespace MenuFunctionOutput
 
         private async Task UploadFile(Guid guid, Stream stream){
              // Create new blob and upload
+            using var reader = new BinaryReader(stream);
+            var data = reader.ReadBytes((int)stream.Length);
+            if(data.Length == 0) throw new Exception("HEPL could not read bytes off of request stream 😢");
+            
+            //HIER WETEN WE ZEKER DAT WE BYTES HEBBEN!
+
             await container.CreateIfNotExistsAsync();
             BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{guid}.json");
-            blobClient.Upload(stream);
+            
+            using var newStream = new MemoryStream(data, writable: false);
+            await blobClient.UploadAsync(newStream);
         }
 
         private async Task InsertTableRecord(Guid guid,IncomingOrderMessage data ){

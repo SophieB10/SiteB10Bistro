@@ -44,6 +44,17 @@ function totalAmount(){
         'Content-Type': 'application/json'  
       },  
     Body: requestBody
+    })
+    .then(res => {
+        if(!res.ok) {
+          return res.text().then(text => { throw new Error(text) })
+         }
+        else {
+         return res.json();
+       }    
+      })
+    .catch((error) => {
+        console.log(error);
     });
 
     var btn1 = document.getElementById("btn1");
