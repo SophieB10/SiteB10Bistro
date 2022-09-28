@@ -36,12 +36,13 @@ function totalAmount(){
        };
 
 
-   fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput', {
-    method: 'POST',
-    headers: {  
-        'Content-Type': 'application/json'  
-      },  
-    Body: JSON.stringify(BODY)
+   //fetch( 'https://b10bc-weu-httptriggersophie-fa.azurewebsites.net/api/TableOutput', {
+    fetch( 'http://localhost:7071/api/TableOutput', {
+        method: 'POST',
+        headers: {  
+            'Content-Type': 'application/json'  
+        },  
+        body: JSON.stringify(BODY)
     })
     .catch((error) => {
         console.log(error);

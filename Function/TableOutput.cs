@@ -41,10 +41,7 @@ namespace MenuFunctionOutput
         private string CONNECTION_STRING;
         private  BlobContainerClient container;
         const string BLOB_CONTAINER = "orderblobs";
-
         const string TABLE_NAME = "Orders";
-
-
 
         public TableOutput(){
             CONNECTION_STRING = Environment.GetEnvironmentVariable("ConnectionString");
@@ -57,14 +54,15 @@ namespace MenuFunctionOutput
             ILogger log)
         {         
 
-            string reqBody = await new StreamReader(req.Body).ReadToEndAsync();   
+            string reqBody = await req.ReadAsStringAsync();
+
 
             IncomingOrderMessage data;
 
             // Input guard
             try{
                 data = JsonConvert.DeserializeObject<IncomingOrderMessage>(reqBody);
-                var valid = string.IsNullOrWhiteSpace(data.order);
+                var valid = !string.IsNullOrWhiteSpace(data.order);
                 if(!valid) return new BadRequestObjectResult("Order is null 😢");
             }
             catch(Exception e){
