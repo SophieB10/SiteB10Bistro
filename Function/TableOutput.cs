@@ -28,41 +28,89 @@ namespace MenuFunctionOutput
             public string Status { get; set; } = "Processed";
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
+        }
 
+        // "{"priceCalculated":"11.00","ordqwerqweer":"Chocolate gateau,Margarita lemon"}"
+
+        public class IncomingOrderMessage
+        {
+            public decimal priceCalculated { get; set; }
+            public string order { get; set; }
+        }
+
+        private string CONNECTION_STRING;
+        private  BlobContainerClient container;
+        const string BLOB_CONTAINER = "orderblobs";
+
+        const string TABLE_NAME = "Orders";
+
+
+
+        public TableOutput(){
+            CONNECTION_STRING = Environment.GetEnvironmentVariable("ConnectionString");
+            container = new BlobContainerClient(CONNECTION_STRING, BLOB_CONTAINER);
         }
 
         [FunctionName("TableOutput")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
-        {
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-         
-            var CONNECTION_STRING = Environment.GetEnvironmentVariable("ConnectionString");
-            string GUID = Guid.NewGuid().ToString();
+        {         
 
-            string BLOB_CONTAINER = "orderblobs";
-            BlobContainerClient container = new BlobContainerClient(CONNECTION_STRING, BLOB_CONTAINER);
+            string reqBody = await req.ReadAsStringAsync();          
+
+            IncomingOrderMessage data;
+
+            // Input guard
+            try{
+                data = JsonConvert.DeserializeObject<IncomingOrderMessage>(reqBody);
+            }
+            catch(Exception e){
+                var msg = $"Hepl! Could not deserialize msg: {reqBody}";
+                log.LogError(e,msg);
+                return new BadRequestObjectResult(msg);
+            }             
+            var GUID = Guid.NewGuid();       
+
+            try{
+                await UploadFile(GUID,req.Body);
+            }  
+            catch(Exception e){
+                var msg = $"Hepl! Error uploading file: {reqBody}";
+                log.LogError(e,msg);
+                return new BadRequestObjectResult(msg);
+            }       
+
+            try{
+               await InsertTableRecord(GUID,data);
+            }  
+            catch(Exception e){
+                var msg = $"Hepl! Error inserting record in table: {reqBody}";
+                log.LogError(e,msg);
+                return new BadRequestObjectResult(msg);
+            }  
+            
+
+            return new OkObjectResult(data.priceCalculated);
+        }
+
+        private async Task UploadFile(Guid guid, Stream stream){
+             // Create new blob and upload
             await container.CreateIfNotExistsAsync();
-            byte[] byteArray = Encoding.ASCII.GetBytes(requestBody);
-            MemoryStream blob = new MemoryStream(byteArray);
-            BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{GUID}.json");
-            blobClient.Upload(blob);
+            BlobClient blobClient = new BlobClient(CONNECTION_STRING, BLOB_CONTAINER, $"{guid}.json");
+            blobClient.Upload(stream);
+        }
 
-            TableClient tableClient = new TableClient(CONNECTION_STRING , "Orders");
+        private async Task InsertTableRecord(Guid guid,IncomingOrderMessage data ){
+            // Insert Table record
+            TableClient tableClient = new TableClient(CONNECTION_STRING , TABLE_NAME);
             await tableClient.CreateIfNotExistsAsync();
-
             var Orderitem = new Order()
             {
                 Amount = data.priceCalculated,
-                RowKey = GUID
+                RowKey = guid.ToString()
             };
-
             await tableClient.AddEntityAsync<Order>(Orderitem);
-
-            return new OkObjectResult(data.priceCalculated);
-
         }
     }
 }
