@@ -8,7 +8,7 @@ function ListOrder() {
 
     var selecteddish = document.querySelector('input[name="order_item"]:checked').value;
 
-    dishlist.push(selecteddish.substring(0, selecteddish.indexOf(':')));
+    dishlist.push(selecteddish);
 
     const price = String(selecteddish).split(" ").pop();
 
@@ -25,6 +25,7 @@ function ListOrder() {
 
 function totalAmount(){
     document.getElementById("price").innerHTML = "Totaal Bedrag: " + totalPrice.toFixed(2);
+    var orderlist = dishlist.toString();
 
     const options = {
         method: 'POST',
@@ -34,7 +35,7 @@ function totalAmount(){
           },  
          body: `{
             "priceCalculated": ${totalPrice.toFixed(2)},
-            "Order": '${dishlist}']
+            "Order": ${dishlist}]
            }`,  
     };
 
